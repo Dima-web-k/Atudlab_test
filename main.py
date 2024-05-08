@@ -127,8 +127,9 @@ async def getForm(
 
 @app.post("/forms/")
 async def getForm(
-    form_title: str,
-    Qtype: str,
-    Qbody: str,
+    form
+    # form_title: str,
+    # Qtype: str,
+    # Qbody: str,
 ):
-    return await add_form_to_db(form_title, Qtype, Qbody)
+    return {form, await add_form_to_db(form_title, Qtype, Qbody)}
