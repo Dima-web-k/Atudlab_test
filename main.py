@@ -126,12 +126,8 @@ async def getForm(
     return forms
 
 @app.post("/forms/")
-async def getForm(
-    form
-    # form_title: str,
-    # Qtype: str,
-    # Qbody: str,
-):
-    pritn(form)
-    pritn(type(form))
-    return {form, await add_form_to_db(form_title, Qtype, Qbody)}
+async def getForm(data_json):
+    form_title=data_json[0]
+    Qtype=data_json[1]
+    Qbody=data_json[2]
+    return { await add_form_to_db(form_title, Qtype, Qbody)}
