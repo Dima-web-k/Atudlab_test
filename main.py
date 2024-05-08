@@ -132,4 +132,6 @@ async def getForm(
     # Qtype: str,
     # Qbody: str,
 ):
+    pritn(form)
+    pritn(type(form))
     return {form, await add_form_to_db(form_title, Qtype, Qbody)}
