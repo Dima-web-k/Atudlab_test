@@ -125,8 +125,11 @@ async def getForm(
     forms = await get_form_from_db(formTitle)
     return forms
 
+class Data_json(BaseModel):
+    user_name: str
+
 @app.post("/forms/")
-async def getForm(data_json):
+async def getForm(data_json: Data_json):
     data_json = json.loads(data_json)
 
     return { await add_form_to_db(data_json['form_title'], data_json['Qtype'], data_json['Qbody'])}
