@@ -127,7 +127,6 @@ async def getForm(
 
 @app.post("/forms/")
 async def getForm(data_json):
-    form_title=data_json[0]
-    Qtype=data_json[1]
-    Qbody=data_json[2]
-    return { await add_form_to_db(form_title, Qtype, Qbody)}
+    data_json = json.loads(data_json)
+
+    return { await add_form_to_db(data_json['form_title'], data_json['Qtype'], data_json['Qbody'])}
