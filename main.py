@@ -127,7 +127,7 @@ async def getForm(
 
 class Item(BaseModel):
     title: str
-    typer: str
+    type: str
     body: str
 
 
@@ -135,4 +135,4 @@ class Item(BaseModel):
 async def addForm(data_json: Item):
     print(type(data_json.title))
     # data_json = json.loads(data_json)
-    return { await add_form_to_db(data_json.title, data_json.typer, data_json.body)}
+    return { await add_form_to_db(data_json.title, data_json.type, data_json.body)}
