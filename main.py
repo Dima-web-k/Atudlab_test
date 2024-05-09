@@ -17,7 +17,7 @@ title TEXT NOT NULL
 ''')
 
 cursor.execute('''
-CREATE TABLE IF NOT EXISTS Questionstest (
+CREATE TABLE IF NOT EXISTS Questions (
 id INTEGER PRIMARY KEY,
 type TEXT NOT NULL,
 body TEXT NOT NULL,
@@ -125,11 +125,10 @@ async def getForm(
     forms = await get_form_from_db(formTitle)
     return forms
 
-class Data_json(BaseModel):
-    user_name: str
 
 @app.post("/forms/")
-async def getForm(data_json: Data_json):
+async def addForm(data_json):
+    print(type(data_json))
     data_json = json.loads(data_json)
 
-    return { await add_form_to_db(data_json['form_title'], data_json['Qtype'], data_json['Qbody'])}
+    return { await add_form_to_db(data_json['title'], data_json['type'], data_json['body'])}
