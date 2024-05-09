@@ -82,10 +82,10 @@ async def get_form_from_db(
     return data
 
 
+
 async def add_form_to_db(
     form_title: str,
-    Qtype: str,
-    Qbody: str,
+    questions: list
 ):
     connection = sqlite3.connect('my_database.db')
     connection.row_factory = sqlite3.Row 
@@ -95,9 +95,9 @@ async def add_form_to_db(
         cursor.execute('INSERT INTO Forms (title) VALUES (?)', (form_title,))
 
         form_id = cursor.lastrowid
-
-        cursor.execute('INSERT INTO Questions (type, body, form_id) VALUES (?, ?, ?)', (Qtype, Qbody, form_id,))
-        
+        for q in questions:
+            cursor.execute('INSERT INTO Questions (type, body, form_id) VALUES (?, ?, ?)', (q['type'], q['body'], form_id,))
+            
         connection.commit()
     except TypeError:
         data = 'ERROR: error by add_form_to_db() function'
@@ -127,12 +127,12 @@ async def getForm(
 
 class Item(BaseModel):
     title: str
-    type: str
-    body: str
+    questions: list
+    
 
 
 @app.post("/forms/")
 async def addForm(data_json: Item):
     print(type(data_json.title))
     # data_json = json.loads(data_json)
-    return { await add_form_to_db(data_json.title, data_json.type, data_json.body)}
+    return { await add_form_to_db(data_json.title, data_json.questions)}
